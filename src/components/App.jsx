@@ -1,6 +1,7 @@
 class App extends React.Component {
 	constructor() {
 		super();
+		searchYouTube({'query': 'red velvet', 'max': 5, 'key': 'AIzaSyCZnKznIq99IDHH4EaFnJi-vVtTZgg72K0'});
 		this.onVideoClick = this.onVideoClick.bind(this);
 		this.state = {
 			vids: exampleVideoData[1]
