@@ -3,13 +3,13 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.onVideoClick = this.onVideoClick.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 		this.state = {
 			vids: exampleVideoData[1],
-			exampleVideoData: exampleVideoData
+			exampleVideoData: exampleVideoData,
+			input: 'cat'
 		};
 	}
-
-
 
 	componentDidMount() {
 		this.props.searchYouTube({'query': 'red velvet', 'max': 5, 'key': YOUTUBE_API_KEY}, function(data) {
@@ -20,6 +20,15 @@ class App extends React.Component {
 		}.bind(this));
 	}
 
+  handleClick(val) {
+    this.props.searchYouTube({'query': val, 'max': 5, 'key': YOUTUBE_API_KEY}, function(data) {
+			this.setState({
+				vids: data[0],
+				exampleVideoData: data
+			});
+		}.bind(this));
+  }
+
 	onVideoClick(video) {
 		this.setState({
 			vids: video
@@ -29,7 +38,7 @@ class App extends React.Component {
 	render() {
 		return (
       <div>
-		    <Nav />
+		    <Nav handleClick={this.handleClick} />
 		    <div className="col-md-7">
 		      <VideoPlayer video={this.state.vids}/>
 		    </div>
