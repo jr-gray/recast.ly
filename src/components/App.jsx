@@ -1,11 +1,23 @@
 class App extends React.Component {
-	constructor() {
-		super();
-		searchYouTube({'query': 'red velvet', 'max': 5, 'key': 'AIzaSyCZnKznIq99IDHH4EaFnJi-vVtTZgg72K0'});
+
+	constructor(props) {
+		super(props);
 		this.onVideoClick = this.onVideoClick.bind(this);
 		this.state = {
-			vids: exampleVideoData[1]
+			vids: exampleVideoData[1],
+			exampleVideoData: exampleVideoData
 		};
+	}
+
+
+
+	componentDidMount() {
+		this.props.searchYouTube({'query': 'red velvet', 'max': 5, 'key': YOUTUBE_API_KEY}, function(data) {
+			this.setState({
+				vids: data[0],
+				exampleVideoData: data
+			});
+		}.bind(this));
 	}
 
 	onVideoClick(video) {
@@ -22,7 +34,7 @@ class App extends React.Component {
 		      <VideoPlayer video={this.state.vids}/>
 		    </div>
 		    <div className="col-md-5">
-		      <VideoList videos={exampleVideoData} onVideoClick={this.onVideoClick} />
+		      <VideoList videos={this.state.exampleVideoData} onVideoClick={this.onVideoClick} />
 		    </div>
 	 		</div>
 		);
